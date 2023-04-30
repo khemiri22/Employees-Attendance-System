@@ -1,0 +1,297 @@
+<main id="main" class="main">
+
+    <div class="pagetitle">
+        <h1>Employees Manager</h1>
+        <nav>
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a >Home</a></li>
+            <li class="breadcrumb-item active">Employees-manager</li>
+          </ol>
+        </nav>
+      </div><!-- End Page Title -->
+
+
+
+
+      <div style="text-align: right;"><button type="button" class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#addEmployeeModal" (click)="checkBusy()" ><i class="bi bi-plus-circle"></i> ADD EMPLOYEE</button></div>
+      <br>
+      <br>
+      <section class="section" >
+        <div class="row  ">
+            <div class="col col-12 col-md-auto" *ngFor="let item of employeesDataArray">
+            <div class="card" style="width:490px;">
+                <img [src]="item.image" class="card-img-top" style="max-height: 400px;" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title" style="font-size:200%;">{{item.name.toUpperCase()}}</h5>
+                  <div class="card-text">
+                     <div style="font-size:135%;" > <i style="font-weight: bold;text-decoration: underline;" >CIN: </i>{{item.cin}} </div>
+                      <div style="font-size:135%;"><i style="font-weight: bold;text-decoration: underline;">POSITION: </i>{{item.position.toUpperCase()}} </div>
+                      <div style="font-size:135%;"><i style="font-weight: bold;text-decoration: underline;">PHONE: </i>{{item.phone}}</div>
+                      </div>
+                      <br>
+                      <button style="font-size: 120%;margin-left:30px" type="button" class="btn btn-outline-info"(click)="getEmployeeDataToUpdate(item.cin)" data-bs-toggle="modal" data-bs-target="#updateEmployeeModal" > <i class="bi bi-info-circle"></i> DETAILS</button>
+                      <button style="margin-left:140px;font-size: 120%;" type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#deleteEmployeeModal" (click)="employeeToDeleteCin=item.cin;checkBusy()"><i class="bi bi-trash"></i> DELETE</button> 
+
+
+
+                </div>
+              </div>
+              
+            </div>
+    </div>
+      </section>
+
+
+
+
+
+
+
+         <!-- Add Employee Modal -->
+      <div class="modal fade" id="addEmployeeModal" tabindex="-1" aria-labelledby="addEmployeeModalLabel" aria-hidden="true" *ngIf="permissionChanging===0">
+        <div class="modal-dialog">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title" id="addEmployeeModalLabel">ADD EMPLOYEE</h5>
+              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <form class="row g-3 needs-validation" #f="ngForm" (ngSubmit)="addEmployee(f)">
+
+
+
+
+
+                    <div class="col-12">
+                        <label  class="form-label">CIN</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-person-video3"></span>
+                          </span>
+                        <input type="text"  type="text" (keypress)="numberOnly($event)" class="form-control" placeholder="CIN" name="cin" #cin="ngModel" ngModel required minlength="8" maxlength="8" [(ngModel)]="empCin">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="cin.errors?.['required'] && cin.touched ">Please enter your CIN !</div>
+                        <div  class="alert alert-danger" *ngIf="cin.errors?.['minlength'] && cin.touched ">CIN must consist of 8 numbers !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Full Name</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-person-check"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Full name" name="fullName" #fullName="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="fullName.errors?.['required'] && fullName.touched">Please enter employee full name !</div>
+                      </div>
+
+
+                      <div class="col-12">
+                        <label  class="form-label">Date of birth</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-calendar"></span>
+                          </span>
+                        <input type="date" class="form-control"   name="birthday" #birthday="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="birthday.errors?.['required'] && birthday.touched">Please employee date of birth !</div>
+                      </div>
+
+
+                      <div class="col-12">
+                        <label  class="form-label">Address</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-geo-alt-fill"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Address" name="address" #address="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="address.errors?.['required'] && address.touched">Please enter employee address !</div>
+                      </div>
+
+
+
+                      <div class="col-12">
+                        <label  class="form-label">Phone number</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">+216</span>
+                        <input type="text" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Phone number" name="phone" #phone="ngModel" ngModel required minlength="8" maxlength="8">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="phone.errors?.['required'] && phone.touched ">Please enter your phone number !</div>
+                        <div  class="alert alert-danger" *ngIf="phone.errors?.['minlength'] && phone.touched ">Phone must consist of 8 numbers !</div>
+                      </div>
+                      
+
+                    <div class="col-12">
+                        <label  class="form-label">Position</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-briefcase-fill"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Position" name="position" #position="ngModel" ngModel required>
+                      </div>
+                      </div>
+                      <div class="clo-12">
+                        <div  class="alert alert-danger" *ngIf="position.errors?.['required'] && position.touched">Please enter employee position !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Upload 5 images for the employee</label>
+                        <div class="input-group has-validation">
+                        <input type="file" class="form-control" [disabled]="f.invalid || disableUploadImages===true"  name="images" accept=".jpg,.png,.jpeg" multiple (change)="uploadImages($event)">
+                        &nbsp;&nbsp;&nbsp;&nbsp;
+                        <div class="text-end" *ngIf="numberImagesToUpload===true && !successUploadImages" >
+                            <div class="spinner-border text-primary " role="status">
+                              <span class="visually-hidden">Loading...</span>
+                            </div>
+      
+                          </div>
+
+                          <div class="text-end"  *ngIf="numberImagesToUpload===true && successUploadImages && alreadyExist===false">
+                            <span  class="bi bi-check2" style="color: green;font-size:25px;"></span>
+                          </div>
+                    </div>
+                      </div>
+                      <div class="clo-12">
+                        <div  class="alert alert-danger" *ngIf="numberImagesToUpload===false && alreadyExist===false">Please upload 5 images for the employee !</div>
+                      </div>
+                      <div class="clo-12">
+                        <div  class="alert alert-danger" *ngIf="alreadyExist===true">This employee is already exist !</div>
+                      </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                        <button  class="btn btn-primary" type="submit" [disabled]="f.invalid || !successUploadImages" data-bs-dismiss="modal">ADD EMPLOYEE</button>
+                      </div>
+                </form>
+
+
+
+
+
+
+
+
+            </div>
+            
+          </div>
+        </div>
+      </div>
+
+
+            <!-- Delete Employee Modal -->
+<div class="modal fade " id="deleteEmployeeModal" tabindex="-1" aria-labelledby="deleteEmployeeModalLabel" aria-hidden="true" *ngIf="permissionChanging===0">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteEmployeeModalLabel">DELETE EMPLOYEE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            ARE YOU SURE TO DELETE THIS EMPLOYEE ?
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-danger" (click)="deleteEmployee()" data-bs-dismiss="modal">DELETE</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+  <!-- Update Employee Modal-->
+
+  <div class="modal fade" id="updateEmployeeModal" tabindex="-1" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="updateEmployeeModalLabel">UPDATE EMPLOYEE</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form class="row g-3 needs-validation">
+
+                  <div class="col-12">
+                    <label  class="form-label">Full Name</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">
+                        <span class="bi bi-person-check"></span>
+                      </span>
+                    <input type="text" class="form-control"  placeholder="Full name" name="fullName" #fullName="ngModel" ngModel required [(ngModel)]="dataObject.fullName">
+                    </div>
+                  </div>
+                  
+
+                  <div class="col-12">
+                    <label  class="form-label">Address</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">
+                        <span class="bi bi-geo-alt-fill"></span>
+                      </span>
+                    <input type="text" class="form-control"  placeholder="Address" name="address" #address="ngModel" ngModel required [(ngModel)]="dataObject.address">
+                    </div>
+                  </div>
+                  
+
+
+
+                  <div class="col-12">
+                    <label  class="form-label">Phone number</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">+216</span>
+                    <input type="text" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Phone number" name="phone" #phone="ngModel" ngModel required minlength="8" maxlength="8" [(ngModel)]="dataObject.phone">
+                    </div>
+                  </div>
+                  
+
+                <div class="col-12">
+                    <label  class="form-label">Position</label>
+                    <div class="input-group has-validation">
+                      <span class="input-group-text" id="inputGroupPrepend">
+                        <span class="bi bi-briefcase-fill"></span>
+                      </span>
+                    <input type="text" class="form-control"  placeholder="Position" name="position" #position="ngModel" ngModel required [(ngModel)]="dataObject.position">
+                  </div>
+                  </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">CLOSE</button>
+                    <button  class="btn btn-primary" type="submit" (click)="updateEmployee()" data-bs-dismiss="modal">UPDATE EMPLOYEE</button>
+                  </div>
+            </form>
+
+
+        </div>
+        
+      </div>
+    </div>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+</main>

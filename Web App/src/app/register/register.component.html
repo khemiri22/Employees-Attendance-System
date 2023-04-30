@@ -1,0 +1,232 @@
+<body>
+
+  <main>
+    <div class="container">
+
+      <section class="section register min-vh-100 d-flex flex-column align-items-center justify-content-center py-4">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-4 col-md-6 d-flex flex-column align-items-center justify-content-center">
+
+              <div class="d-flex justify-content-center py-4">
+                <a routerLink="" class="logo d-flex align-items-center w-auto">
+                  <img src="/assets/img/admin logo.png" alt="" width="40">
+                  <span class="d-none d-lg-block">ADMIN-DASH</span>
+                </a>
+              </div><!-- End Logo -->
+
+              <div class="card mb-3">
+
+                <div class="card-body">
+
+                  <div class="pt-4 pb-2">
+                    <h5 class="card-title text-center pb-0 fs-4">Create an Account</h5>
+                    <p class="text-center small">Enter your personal details to create account</p>
+                  </div>
+
+                  <form class="row g-3 needs-validation" #f="ngForm" (ngSubmit)="register(f)">
+
+                      <div class="col-12">
+                        <label  class="form-label">First name</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-person-check-fill"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="First name" name="firstName" #firstName="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="firstName.errors?.['required'] && firstName.touched">Please enter first name !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Last name</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-person-check"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Last name" name="lastName" #lastName="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="lastName.errors?.['required'] && lastName.touched">Please enter last name !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Company</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-briefcase-fill"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Company name" name="company" #company="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="company.errors?.['required'] && company.touched">Please enter your company name !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Date of birth</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-calendar"></span>
+                          </span>
+                        <input type="date" class="form-control"   name="birthDay" #birthDay="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="birthDay.errors?.['required'] && birthDay.touched">Please enter your date of birth !</div>
+                      </div>
+                      <div class="col-12">
+                        <label  class="form-label">Phone number</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">+216</span>
+                        <input type="text" (keypress)="numberOnly($event)" type="text" class="form-control" placeholder="Phone number" name="phone" #phone="ngModel" ngModel required minlength="8" maxlength="8">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="phone.errors?.['required'] && phone.touched ">Please enter your phone number !</div>
+                        <div  class="alert alert-danger" *ngIf="phone.errors?.['minlength'] && phone.touched ">Phone must consist of 8 numbers !</div>
+                      </div>
+
+
+
+                      <div class="col-12">
+                        <label  class="form-label">First entry-time</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-clock"></span>
+                          </span>
+                        <input type="time" class="form-control"   name="entryTime1" #entryTime1="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="entryTime1.errors?.['required'] && entryTime1.touched">Please enter your company first entry-time !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Second entry-time</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-clock"></span>
+                          </span>
+                        <input type="time" class="form-control"   name="entryTime2" #entryTime2="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="entryTime2.errors?.['required'] && entryTime2.touched">Please enter your company second entry-time !</div>
+                      </div>
+
+
+
+
+                      <div class="col-12">
+                        <label  class="form-label">First exit-time</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-clock-fill"></span>
+                          </span>
+                        <input type="time" class="form-control"   name="exitTime1" #exitTime1="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="exitTime1.errors?.['required'] && exitTime1.touched">Please enter your company first exit-time !</div>
+                      </div>
+
+                      <div class="col-12">
+                        <label  class="form-label">Second exit-time</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-clock-fill"></span>
+                          </span>
+                        <input type="time" class="form-control"   name="exitTime2" #exitTime2="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="exitTime2.errors?.['required'] && exitTime2.touched">Please enter your company second exit-time !</div>
+                      </div>
+
+
+
+
+
+
+
+                    <div class="col-12">
+                        <label  class="form-label">Email</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-envelope"></span>
+                          </span>
+                        <input type="text" class="form-control"  placeholder="Email" name="email" #email="ngModel" ngModel required email>
+                      </div>
+                      </div>
+                      <div class="clo-12">
+                        <div  class="alert alert-danger" *ngIf="email.errors?.['required'] && email.touched">Please enter your email !</div>
+                        <div  class="alert alert-danger" *ngIf="email.errors?.['email'] && email.touched">Please enter a valid email !</div>
+                      </div>
+
+            
+
+
+                    <div class="col-12">
+                        <label  class="form-label">Password</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-shield-lock"></span>
+                          </span>
+                        <input type="password" class="form-control"  placeholder="Password" name="password" #password="ngModel" ngModel required minlength="8">
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="password.errors?.['required'] && password.touched">Please enter your password !</div>
+                        <div  class="alert alert-danger" *ngIf="password.errors?.['minlength'] && password.touched">Password should be more than 8 caracters !</div>
+                      </div>
+                    
+                    <div class="col-12">
+                        <label  class="form-label">Confirm password</label>
+                        <div class="input-group has-validation">
+                          <span class="input-group-text" id="inputGroupPrepend">
+                            <span class="bi bi-shield-lock"></span>
+                          </span>
+                        <input type="password" class="form-control"  placeholder="Confirm password" name="confirmPassword" #confirmPassword="ngModel" ngModel required>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="password.value!==confirmPassword.value && confirmPassword.touched && password.status=='VALID'  ">Please enter the same password again !</div>
+                      </div>
+  
+
+
+                    <div class="col-12">
+                      <button class="btn btn-primary w-100" type="submit" [disabled]="f.invalid || password.value!==confirmPassword.value">Create Account</button>
+                    </div>
+                    <div class="col-12">
+                        <div  class="alert alert-danger" *ngIf="alreadyExist && f.valid && password.value===confirmPassword.value" style="text-align: center;">{{alreadyExist}}</div>
+                      </div>
+                    <div class="col-12">
+                      <p class="small mb-0" style="text-align: center;">Already have an account? <a routerLink="/login">Log in</a></p>
+                    </div>
+                    <div class="col-12">
+                        <p style="text-align: center;" class="small mb-0"><a routerLink="/forgetPass">Forget Password ?</a></p>
+                      </div>
+                  </form>
+
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+  <!-- End #main -->
+
+
+  
+</body>
+
+

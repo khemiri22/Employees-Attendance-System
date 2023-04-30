@@ -1,0 +1,75 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Today Workshop-State</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a >Home</a></li>
+          <li class="breadcrumb-item active">Workshop-state</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+
+    
+<br>
+    <!-- Recent Sales -->
+    <div class="col-12" style="width: 100%;margin: auto;padding:10px;">
+      <div><h3 style="text-align: right;font-weight: bold;">{{currentDate | date:'fullDate'}}</h3></div>
+      <br>
+        <div class="card recent-sales overflow-auto">
+
+          <div class="card-body">
+
+            <table class="table table-borderless datatable">
+              <thead>
+                <tr>
+                  <th scope="col">CIN</th>
+                  <th scope="col">NAME</th>
+                  <th scope="col">FIRST ENTRY-TIME</th>
+                  <th scope="col">FIRST EXIT-TIME</th>
+                  <th scope="col">SECOND ENTRY-TIME</th>
+                  <th scope="col">SECOND EXIT-TIME</th>
+                  <th scope="col">STATUS</th>
+                  <th scope="col">LATES</th>
+                  <th scope="col">EARLY-EXITS</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr *ngFor="let item of EmplyeesNowList | orderBy:'name'">
+                  <th scope="row">{{item.cin}}</th>
+                  <td>{{item.name.toUpperCase()}}</td>
+                  <td>{{item.entry1}}</td>
+                  <td>{{item.exit1}}</td>
+                  <td>{{item.entry2}}</td>
+                  <td>{{item.exit2}}</td>
+                  <td>
+                    <span class="badge bg-danger" *ngIf="item.entry1==='' && item.exit1==='' && item.entry2==='' && item.exit2==='' ">ABSENT</span>
+                    <span class="badge bg-success" *ngIf="item.entry1!=='' && item.exit1==='' && item.entry2==='' && item.exit2===''">PRESENT</span>
+                    <span class="badge bg-info" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2==='' && item.exit2==='' ">LEFT</span>
+                    <span class="badge bg-success" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2!=='' && item.exit2==='' ">PRESENT<i></i></span>
+                    <span class="badge bg-info" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2!=='' && item.exit2!=='' ">LEFT</span>
+                    
+                    </td>
+                    <td>
+                      <div>  <span style="font-size: 14px;" class="badge rounded-pill bg-warning text-light"*ngIf="item.late1.charAt(0)!=='-' && item.late1.charAt(0)!=='0' && item.entry1!=='' "><i class="bi bi-exclamation-triangle"></i> {{item.late1}}</span></div>
+                      <div style="margin: 5px 0;"><span style="font-size: 14px;" class="badge rounded-pill bg-warning text-light"*ngIf="item.late2.charAt(0)!=='-' && item.late2.charAt(0)!=='0' && item.entry2!=='' "><i class="bi bi-exclamation-triangle"></i> {{item.late2}}</span></div>
+                    </td>
+
+                    <td>
+                      <div><span style="font-size: 14px;" class="badge rounded-pill bg-warning text-light"*ngIf="item.early1.charAt(0)!=='-' && item.early1.charAt(0)!=='0' && item.exit1!=='' "><i class="bi bi-exclamation-triangle"></i> {{item.early1}}</span></div>
+                      <div style="margin: 5px 0;"><span style="font-size: 14px;" class="badge rounded-pill bg-warning text-light"*ngIf="item.early2.charAt(0)!=='-' && item.early2.charAt(0)!=='0' && item.exit2!=='' "><i class="bi bi-exclamation-triangle"></i> {{item.early2}}</span></div>
+                    </td>
+
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+        </div>
+      </div><!-- End Recent Sales -->
+
+
+
+<!-- End #main -->
+</main>
+
+

@@ -1,0 +1,4 @@
+@import '~ngx-toastr/toastr';
+.main{
+    min-height: 860px;
+}

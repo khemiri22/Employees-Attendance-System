@@ -1,0 +1,93 @@
+<main id="main" class="main">
+    <div class="pagetitle">
+      <h1>Daily Attendance-Report</h1>
+      <nav>
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a >Home</a></li>
+          <li class="breadcrumb-item active">Attendance-report</li>
+        </ol>
+      </nav>
+    </div><!-- End Page Title -->
+    <br>
+
+    
+    <div style="text-align:center;" >
+        <div> <label style="font-weight: bold;font-size: 120%;"  >PICK ATTTENDANCE REPORT DATE YOU WANT TO CHECK</label></div>
+        <input type="date"  (change)="getDateLog($event)"  style="width: 35%;" name="logDate"  >
+    </div> 
+    <br>
+    <section class="section" >
+        <div class="row">
+    <div class="col-lg-12">
+        <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="exist===false" style="width: 700px;margin: auto;padding: 20px;">
+            
+              <h5 class="alert-heading" style="text-align: center;">NO ATTENDANCE REPORT FOR THIS DAY !!</h5>
+         </div>
+
+
+     <div class="card"  style="width: 95%;margin:auto;padding:20px;" *ngIf="exist===true">
+
+        <div class="card-body" >
+            <div style="text-align: end;"><button type="button" class="btn btn-outline-success" (click)="exportAttendanceReportToExcel()"><i class="bi bi-table"></i> EXPORT TO EXCEL</button></div>
+          <h5 class="card-title">ATTENDANCE REPORT FOR:<h3 style="text-decoration: underline;font-weight: bold;">{{day}}</h3></h5>
+          <!-- Bordered Table -->
+
+          <table class="table table-bordered" id="logReportTable">
+            <thead>
+              <tr>
+                <th scope="col">CIN</th>
+                <th scope="col">NAME</th>
+                <th scope="col">FIRST ENTRY-TIME</th>
+                <th scope="col">FIRST EXIT-TIME</th>
+                <th scope="col">SECOND ENTRY-TIME</th>
+                <th scope="col">SECOND EXIT-TIME</th>
+                <th scope="col">STATUS</th>
+                <th scope="col">LATES</th>
+                <th scope="col">EARLY-EXITS</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of logReportArray | orderBy:'name'">
+                <th scope="row">{{item.cin}}</th>
+                <td>{{item.name.toUpperCase()}}</td>
+                <td>{{item.entry1}}</td>
+                <td>{{item.exit1}}</td>
+                <td>{{item.entry2}}</td>
+                <td>{{item.exit2}}</td>
+                <td>
+                  <span class="badge bg-danger" *ngIf="item.entry1==='' && item.exit1==='' && item.entry2==='' && item.exit2==='' ">ABSENT</span>
+                  <span class="badge bg-secondary" *ngIf="item.entry1!=='' && item.exit1==='' && item.entry2==='' && item.exit2==='' ">INCOMPLETE</span>
+                  <span class="badge bg-info" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2==='' && item.exit2==='' ">HALF-TIME</span>
+                  <span class="badge bg-secondary" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2!=='' && item.exit2==='' ">INCOMPLETE</span>
+                  <span class="badge bg-success" *ngIf="item.entry1!=='' && item.exit1!=='' && item.entry2!=='' && item.exit2!=='' ">FULL-TIME</span>
+
+                </td>
+                <td>
+                  <div><span style="font-size: 14px;" *ngIf="item.late1.charAt(0)!=='-' && item.late1.charAt(0)!=='0' && item.entry1!=='' ">{{item.late1}}</span></div>
+                      <div style="margin: 5px 0;"><span style="font-size: 14px;" *ngIf="item.late2.charAt(0)!=='-' && item.late2.charAt(0)!=='0' && item.entry2!=='' ">{{item.late2}}</span></div>
+
+                </td>
+                <td>
+                  <div><span style="font-size: 14px;" *ngIf="item.early1.charAt(0)!=='-' && item.early1.charAt(0)!=='0' && item.exit1!=='' ">{{item.early1}}</span></div>
+                  <div style="margin: 5px 0;"><span style="font-size: 14px;" *ngIf="item.early2.charAt(0)!=='-' && item.early2.charAt(0)!=='0' && item.exit2!=='' ">{{item.early2}}</span></div>
+
+                </td>
+              </tr>
+             
+            </tbody>
+          </table>
+          <!-- End Bordered Table -->
+          </div>
+          </div>
+
+    </div>
+</div>
+</section>
+
+
+
+
+<!-- End #main -->
+</main>
+
+
